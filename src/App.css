@@ -1,7 +1,27 @@
-*{
-  margin: 0px;
-  padding: 0px;
-  box-sizing: border-box;
+html, body {
+  background-color: #0a0a0a;
+}
+
+#root {
+  background-color: #0a0a0a;
+}
+
+.homepage {
+  background-color: #0a0a0a;
+}
+
+.cars-section {
+  background-color: #0a0a0a;
+  padding: 40px 20px;
+}
+
+.section-title {
+  background-color: #0a0a0a;
+  color: #FFFFFF;
+  font-size: 72px;
+  font-weight: bolder;
+  padding: 20px;
+  margin: 0; 
 }
 
 .taskbar{
@@ -45,7 +65,7 @@
 a{
   text-decoration: none;
   color: #FFFFFF;
-  margin-right: 25px;
+  margin-right: 60px;
   font-size: 20px;
   transition: all 0.3s ease;
   font-family: sans-serif;
@@ -56,3 +76,22 @@ a:hover{
    transform: scale(1.2);
    text-decoration: underline;
 }
+
+html{
+  scroll-behavior: smooth;
+}
+
+.section-title{
+  background-color: #0A0A0A;
+  color: #FFFFFF;
+  font-size: 72px;
+  font-weight: bolder;
+}
+
+.car-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-right: 200px;
+}
+

@@ -18,7 +18,7 @@ const Hero = () => {
       constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 4 + 2; // larger for visibility
+        this.size = Math.random() * 4 + 2;
         this.speedX = (Math.random() - 0.5) * 1.2;
         this.speedY = (Math.random() - 0.5) * 1.2;
         this.color = Math.random() > 0.5 ? "rgba(0,255,255,0.9)" : "rgba(255,0,150,0.9)";
@@ -80,8 +80,10 @@ const Hero = () => {
       <canvas ref={canvasRef} className="particles-canvas" />
       <div className="hero-content">
         <h1 className="logo-text">AUTOVISION</h1>
+        <br />
         <p className="tagline">Experience Automotive Excellence</p>
-        <a href="#explore" className="cta-btn">Explore Now</a>
+        <br />
+        <a href="#cars" className="cta-btn">Explore Now</a>
       </div>
     </div>
   );
