@@ -9,7 +9,7 @@ const CarCardtemp = ({name,brand,price,feature,image}) => {
         <p id='brand'>Brand Name: {brand}</p>
         <p id='price'>Price: {price}</p>
         <p id='feature'>Feature: {feature}</p>
-        <button className='details-btn'>View Details</button>
+        <button className='details'>View Details</button>
       </div>
     </div>
   )

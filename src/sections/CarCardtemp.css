@@ -4,17 +4,9 @@
   border: 2px solid #00ffff;
   border-radius: 16px;
   padding: 25px;
-  transition: all 0.4s ease;
   cursor: pointer;
+  overflow: hidden;
 }
-
-.CarCard:hover {
-  transform: translateY(-8px);
-  border-color: #ff0080;
-  box-shadow: 0 15px 40px rgba(0, 255, 255, 0.4),
-              0 5px 15px rgba(255, 0, 128, 0.3);
-}
-
 .car-section {
   display: flex;
   flex-direction: column;
@@ -24,9 +16,10 @@
   height: 100%;
 }
 
-.Carname {
-  font-size: 28px;
+#CarName {
+  font-size: 30px;
   font-weight: 700;
+  color: #EAEAEA;
   background: linear-gradient(120deg, #00ffff, #ff0080);
   background-clip: border-box;
   -webkit-background-clip: text;
@@ -36,21 +29,24 @@
 }
 
 .car-img {
-  width: 100%;
+  width: 90%;
   max-width: 280px;
   height: 200px;
   object-fit: cover;
   border-radius: 12px;
   border: 1px solid rgba(0, 255, 255, 0.3);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
 }
 
 .car-img:hover {
   transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
 }
 
-#brand, #price, #feature {
-  font-size: 16px;
+#brand,
+#price,
+#feature {
+  font-size: 20px;
   color: rgba(255, 255, 255, 0.85);
   margin: 5px 0;
   letter-spacing: 0.5px;
@@ -62,36 +58,35 @@
   color: #00ffff;
 }
 
-.details-btn {
-  margin-top: 15px;
-  padding: 12px 35px;
+.details {
+  background-color: #0A0A0A;
+  color: #00ffff;
   border: 2px solid #00ffff;
-  background: transparent;
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 500;
-  border-radius: 25px;
+  width: 150px;
+  height: 60px;
+  border-radius: 30px;
+  font-size: 20px;
+  font-family: sans-serif;
   cursor: pointer;
-  transition: all 0.3s ease;
-  letter-spacing: 1px;
+  transition: all 0.3s ease; 
 }
 
-.details-btn:hover {
-  background: rgba(0, 255, 255, 0.2);
-  transform: scale(1.08);
-  box-shadow: 0 5px 20px rgba(0, 255, 255, 0.4);
+.details:hover {
+  background-color: #00ffff;
+  color: #0A0A0A;
+  transform: scale(1.1);
 }
 
 @media (max-width: 768px) {
-  .Carname {
+  #CarName {
     font-size: 22px;
   }
-  
+
   .car-img {
     height: 160px;
   }
-  
-  .details-btn {
+
+  .details {
     padding: 10px 25px;
     font-size: 14px;
   }

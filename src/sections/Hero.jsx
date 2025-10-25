@@ -49,7 +49,7 @@ const Hero = () => {
           const dy = particles[i].y - particles[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
           if (distance < 150) {
-            ctx.strokeStyle = `rgba(0,255,255,${0.2 * (1 - distance / 150)})`;
+            ctx.strokeStyle = `rgba(0,255,255,${0.5 * (1 - distance / 150)})`;
             ctx.lineWidth = 0.5;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);

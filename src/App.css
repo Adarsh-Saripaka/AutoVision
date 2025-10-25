@@ -92,6 +92,8 @@ html{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
-  margin-right: 200px;
+  margin-right: 50px;
+  margin-left: 50px;
+  color: #FFFFFF;
 }
 

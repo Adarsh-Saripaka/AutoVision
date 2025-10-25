@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import Hero from "./sections/Hero";
-import CarCard from "./sections/CarCardtemp";
+import CarCardtemp from "./sections/CarCardtemp";
 import carData from "./cardata/car.json";
 
 const App = () => {
@@ -32,7 +32,7 @@ const App = () => {
       <section id="cars" className="cars-section">
         <div className="car-grid">
           {carData.map((car) => (
-            <CarCard
+            <CarCardtemp
               key={car.id}
               name={car.name}
               brand={car.brand}
