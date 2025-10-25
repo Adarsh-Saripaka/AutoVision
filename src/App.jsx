@@ -3,6 +3,7 @@ import "./App.css";
 import Hero from "./sections/Hero";
 import CarCardtemp from "./sections/CarCardtemp";
 import carData from "./cardata/car.json";
+import Footer from "./sections/Footer";
 
 const App = () => {
   return (
@@ -43,6 +44,12 @@ const App = () => {
           ))}
         </div>
       </section>
+      
+      <footer>
+        <div className="footer">
+          <Footer />
+        </div>
+      </footer>
     </div>
   );
 };

@@ -16,13 +16,23 @@ html, body {
 }
 
 .section-title {
-  background-color: #0a0a0a;
   color: #FFFFFF;
   font-size: 72px;
   font-weight: bolder;
   padding: 20px;
-  margin: 0; 
+  margin: 0;
+  display: inline-block;
+  transition: transform 0.3s ease, text-shadow 0.3s ease;
 }
+
+.section-title:hover {
+  background: linear-gradient(120deg, #00ffff, #ff0080);
+  background-clip: border-box;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(0,255,255,0.5), 0 0 30px rgba(255,0,150,0.5);}
+
+
 
 .taskbar{
   display: flex;
@@ -81,12 +91,6 @@ html{
   scroll-behavior: smooth;
 }
 
-.section-title{
-  background-color: #0A0A0A;
-  color: #FFFFFF;
-  font-size: 72px;
-  font-weight: bolder;
-}
 
 .car-grid {
   display: grid;

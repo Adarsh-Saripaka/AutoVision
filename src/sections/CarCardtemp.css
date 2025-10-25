@@ -5,7 +5,6 @@
   border-radius: 16px;
   padding: 25px;
   cursor: pointer;
-  overflow: hidden;
 }
 .car-section {
   display: flex;
@@ -16,7 +15,7 @@
   height: 100%;
 }
 
-#CarName {
+.CarName {
   font-size: 30px;
   font-weight: 700;
   color: #EAEAEA;
@@ -35,24 +34,27 @@
   object-fit: cover;
   border-radius: 12px;
   border: 1px solid rgba(0, 255, 255, 0.3);
-  transition: transform 0.3s ease, box-shadow 0.3s ease; 
 }
 
-.car-img:hover {
+img{
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+img:hover {
   transform: scale(1.05);
   box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
 }
 
-#brand,
-#price,
-#feature {
+.brand,
+.price,
+.feature {
   font-size: 20px;
   color: rgba(255, 255, 255, 0.85);
   margin: 5px 0;
   letter-spacing: 0.5px;
 }
 
-#price {
+.price {
   font-size: 20px;
   font-weight: 600;
   color: #00ffff;
@@ -62,8 +64,8 @@
   background-color: #0A0A0A;
   color: #00ffff;
   border: 2px solid #00ffff;
-  width: 150px;
-  height: 60px;
+  width: 200px;
+  height: 50px;
   border-radius: 30px;
   font-size: 20px;
   font-family: sans-serif;
@@ -72,8 +74,9 @@
 }
 
 .details:hover {
-  background-color: #00ffff;
+  background-color: #FF0099;
   color: #0A0A0A;
+  border: 2px solid #ffffff;
   transform: scale(1.1);
 }
 
