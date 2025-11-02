@@ -21,3 +21,10 @@ AutoVision is a modern, interactive platform where users can explore cars in 3D.
 
 ## Folder Structure
 
+pokemon-duel-game/
+│
+├── index.html
+├── style.css
+├── script.js           
+└── battlegrounds/
+
