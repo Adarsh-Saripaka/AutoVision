@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Tata Nexon EV",
+    "brand": "Tata",
+    "price": "₹14,00,000",
+    "feature": "Electric SUV with modern features",
+    "image": "/src/images/car1.png"
+  },
+  {
+    "id": 2,
+    "name": "Maruti Suzuki Baleno",
+    "brand": "Maruti Suzuki",
+    "price": "₹7,00,000",
+    "feature": "Premium hatchback with great mileage",
+    "image": "/src/images/car2.png"
+  },
+  {
+    "id": 3,
+    "name": "Mahindra Thar",
+    "brand": "Mahindra",
+    "price": "₹13,00,000",
+    "feature": "Off-road SUV, rugged and stylish",
+    "image": "/src/images/car3.png"
+  }
+]
