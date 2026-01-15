@@ -1,73 +1,101 @@
-import React, { useState } from "react";
+import React from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
 
 import Hero from "./sections/Hero";
-import CarCardtemp from "./sections/CarCardtemp.jsx";
-import carData from "./cardata/car.json";
-import Footer from "./sections/Footer.jsx";
-import Search from "./sections/Search.jsx";
+import Footer from "./sections/Footer";
+import Search from "./sections/Search";
+import Showcase from "./sections/Showcase";
+import BrandCard from "./sections/BrandCard";
 
-const App = () => {
-  const [cars, setCars] = useState(carData);
+const Home = ({ onSearch }) => {
+  const navigate = useNavigate();
 
-  const handleSearch = (results) => {
-    if (results && results.length > 0) {
-      setCars(results);
-    }
-  };
+  const brands = ["BMW", "Audi", "Mercedes", "Porsche", "Honda"];
 
   return (
     <div className="app-container">
+      {/* TASKBAR */}
       <header className="taskbar">
         <div className="logo_title">
           <img src="/Logo.png" alt="Logo" className="logo" />
           <h1 className="title">AutoVision</h1>
         </div>
 
-        <Search onSearch={handleSearch} />
+        <Search onSearch={onSearch} />
 
         <div className="nav_right">
           <div className="navlinks">
-            <a href="#home">Home</a>
-            <a href="#cars">Cars</a>
-            <a href="#reviews">Reviews</a>
-            <a href="#about">About</a>
+            <a
+              href="#brands"
+              onClick={(e) => {
+                e.preventDefault();
+                document
+                  .getElementById("brands")
+                  ?.scrollIntoView({ behavior: "smooth" });
+              }}
+            >
+              Models
+            </a>
             <a href="#contact">Contact</a>
           </div>
         </div>
       </header>
 
-      <div className="homepage" id="home">
+      {/* HERO */}
+      <div className="homepage">
         <Hero />
       </div>
 
-      <p className="section-title">Our Collection</p>
+      {/* BRANDS */}
+      <p className="section-title">Explore Brands</p>
 
-      <section id="cars" className="cars-section">
-        <div className="car-grid">
-          {cars.map((car, index) => (
-            <CarCardtemp
-              key={index}
-              name={car.model || car.name}
-              brand={car.brand || "AutoVision"}
-              price={car.msrp_usd ? "$" + car.msrp_usd : car.price}
-              feature={car.horsepower ? car.horsepower + " HP" : car.feature}
-              image={
-                car.image ||
-                `https://source.unsplash.com/600x400/?${car.brand}+${car.model}+car`
+      <section id="brands" className="brands-section">
+        <div className="brand-grid">
+          {brands.map((brand, i) => (
+            <BrandCard
+              key={i}
+              brand={brand}
+              onClick={() =>
+                navigate("/showcase", {
+                  state: { brand }
+                })
               }
             />
           ))}
         </div>
       </section>
 
-      <footer>
-        <div className="footer">
-          <Footer />
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
 
-export default App;
+export default function App() {
+  const navigate = useNavigate();
+
+  const handleSearch = (results, query) => {
+    if (!results || results.length === 0) return;
+
+    const q = query.toLowerCase().trim();
+
+    const isBrandSearch =
+      results.length > 1 &&
+      results.every(car => car.brand.toLowerCase() === q);
+
+    navigate("/showcase", {
+      state: {
+        hero: results[0],
+        list: isBrandSearch ? results : [],
+        mode: isBrandSearch ? "brand" : "model"
+      }
+    });
+  };
+
+  return (
+    <Routes>
+      <Route path="/" element={<Home onSearch={handleSearch} />} />
+      <Route path="/showcase" element={<Showcase />} />
+    </Routes>
+  );
+}

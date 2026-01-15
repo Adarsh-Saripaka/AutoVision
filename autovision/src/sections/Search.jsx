@@ -7,25 +7,20 @@ const Search = ({ onSearch }) => {
 
   const handleSearch = async () => {
     if (!value.trim()) return;
-
     const results = await searchCars(value);
-    console.log("Backend results:", results);
-    onSearch(results);
+    onSearch(results, value); // PASS QUERY
   };
 
   return (
     <div className="search-container">
       <input
-        type="text"
-        placeholder="Search cars..."
-        className={`search-input ${value ? "center-text" : ""}`}
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+        placeholder="Search cars..."
+        className="search-input"
       />
-      <button className="search-btn" onClick={handleSearch}>
-        🔍
-      </button>
+      <button className="search-btn" onClick={handleSearch}>🔍</button>
     </div>
   );
 };

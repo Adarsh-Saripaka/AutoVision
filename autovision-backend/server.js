@@ -20,13 +20,15 @@ csv()
   });
 
 app.get("/api/search", (req, res) => {
-  const q = (req.query.q || "").toLowerCase();
+  const raw = (req.query.q || "").toLowerCase().trim();
+  if (!raw) return res.json([]);
 
-  const results = cars.filter(
-    (c) =>
-      c.brand?.toLowerCase().includes(q) ||
-      c.model?.toLowerCase().includes(q)
-  );
+  const words = raw.split(/\s+/);
+
+  const results = cars.filter((c) => {
+    const text = `${c.brand} ${c.model} ${c.year}`.toLowerCase();
+    return words.every((w) => text.includes(w));
+  });
 
   res.json(results.slice(0, 50));
 });

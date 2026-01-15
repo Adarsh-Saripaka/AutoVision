@@ -81,7 +81,7 @@ const Hero = () => {
       <canvas ref={canvasRef} className="particles-canvas" />
         <h1 className="logo-text">AUTOVISION</h1>
         <br />
-        <p className="tagline">Experience Automotive Excellence</p>
+        <p className="tagline">When Engineering meets Elegance</p>
         <br />
         <a href="#cars" className="cta-btn">Explore Now</a>
       </div>

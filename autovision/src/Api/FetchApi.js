@@ -1,6 +1,7 @@
 const UNSPLASH_BASE = "https://api.unsplash.com/search/photos";
 const UNSPLASH_KEY = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
-const BACKEND_URL = "http://localhost:5000";
+
+const BASE_URL = "http://localhost:5000/api";
 
 export async function getCarImage(carName) {
   try {
@@ -23,7 +24,15 @@ export async function getCarImage(carName) {
 
 export async function searchCars(query) {
   const res = await fetch(
-    `${BACKEND_URL}/api/search?q=${encodeURIComponent(query)}`
+    `${BASE_URL}/search?q=${encodeURIComponent(query)}`
   );
+
+  if (!res.ok) {
+    console.error("Backend search failed");
+    return [];
+  }
+
   return await res.json();
 }
+
+
