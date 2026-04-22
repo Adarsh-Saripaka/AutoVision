@@ -15,7 +15,7 @@ const CarCardtemp = ({ name, brand, price, feature, image, onView }) => {
         />
 
         <p className="brand">Brand Name: {brand}</p>
-        <p className="price">Price: {price}</p>
+        <p className="price">Price: ${price}</p>
         <p className="feature">Feature: {feature}</p>
 
         {/* 🔥 FINAL: button triggers parent navigation */}

@@ -6,33 +6,44 @@ const BASE_URL = "http://localhost:5000/api";
 export async function getCarImage(carName) {
   try {
     const url = `${UNSPLASH_BASE}?query=${encodeURIComponent(
-      carName + " car"
+      carName + " car full side view exterior"
     )}&client_id=${UNSPLASH_KEY}`;
 
     const response = await fetch(url);
+
+    if (!response.ok) {
+      console.error("Unsplash API error:", response.status);
+      return "https://placehold.co/600x400/1C1C1C/00ffff?text=Image+Not+Found";
+    }
+
     const data = await response.json();
 
     if (!data.results || data.results.length === 0) {
-      return "/default-car.jpg";
+      return "https://placehold.co/600x400/1C1C1C/00ffff?text=Image+Not+Found";
     }
 
     return data.results[0].urls.regular;
-  } catch {
-    return "/default-car.jpg";
+  } catch (err) {
+    console.error("Failed to fetch car image:", err);
+    return "https://placehold.co/600x400/1C1C1C/00ffff?text=Image+Not+Found";
   }
 }
 
 export async function searchCars(query) {
-  const res = await fetch(
-    `${BASE_URL}/search?q=${encodeURIComponent(query)}`
-  );
+  try {
+    const res = await fetch(
+      `${BASE_URL}/search?q=${encodeURIComponent(query)}`
+    );
 
-  if (!res.ok) {
-    console.error("Backend search failed");
+    if (!res.ok) {
+      console.error("Backend search failed:", res.status);
+      return [];
+    }
+
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  } catch (err) {
+    console.error("Search request failed:", err);
     return [];
   }
-
-  return await res.json();
 }
-
-

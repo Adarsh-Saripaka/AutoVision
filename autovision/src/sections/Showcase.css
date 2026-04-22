@@ -44,7 +44,7 @@
     }
 }
 
-img{
+.showcase-hero img {
   border: none;
   border-radius: 30px;
 }
@@ -107,7 +107,7 @@ img{
 }
 
 /* =========================
-   HERO TEXT
+   HERO TEXT & BADGES
 ========================= */
 .hero-overlay {
   position: absolute;
@@ -117,107 +117,141 @@ img{
 }
 
 .hero-overlay h1 {
-  font-size: 90px;
+  font-size: clamp(40px, 8vw, 90px);
   font-weight: 900;
   line-height: 1.05;
+  margin-bottom: 20px;
+  text-transform: uppercase;
 }
 
-.hero-overlay p {
-  font-size: 24px;
-  color: #00f260;
-  letter-spacing: 4px;
-  margin-top: 8px;
+.hero-badges {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.hero-badges span {
+  background: rgba(0, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  font-size: 14px;
+  font-weight: 600;
+  color: #00ffff;
+  letter-spacing: 1px;
 }
 
 /* =========================
-   INFO PANEL (FINAL FIX)
+   INFO PANEL & PRICE
 ========================= */
 .showcase-info {
-  align-self: flex-start;   /* 🔥 key grid fix */
-  padding: 70px 60px;
+  align-self: flex-start;
+  padding: 50px 40px;
   margin: 40px;
-  background: rgba(18, 20, 24, 0.75);
-  backdrop-filter: blur(18px);
+  background: rgba(18, 20, 24, 0.8);
+  backdrop-filter: blur(25px);
   border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
   box-shadow: 0 40px 100px rgba(0, 0, 0, 0.75);
-
   display: flex;
   flex-direction: column;
-  gap: 28px;               /* consistent spacing */
+  gap: 24px;
 }
 
-/* Price */
+.price-tag {
+  display: flex;
+  flex-direction: column;
+}
+
+.price-tag .label {
+  font-size: 12px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+}
+
 .showcase-info .price {
-  font-size: 52px;
-  font-weight: 700;
-  color: #00ffff;
-}
-
-/* Subtitle */
-.subtitle {
-  font-size: 19px;
-  color: #aaaaaa;
+  font-size: 48px;
+  font-weight: 800;
+  color: #ffffff;
   margin: 0;
 }
 
 /* =========================
-   SPEC TABLE (FONT FIX)
+   LOADER
 ========================= */
-.spec-table {
-  border-radius: 18px;
-  overflow: hidden;
-}
-
-.spec-row {
+.showcase-loading {
+  position: fixed;
+  inset: 0;
+  background: #050505;
   display: flex;
-  justify-content: space-between;
-  padding: 18px 22px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
-.spec-row:last-child {
-  border-bottom: none;
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #FFF;
+  border-bottom-color: #00ffff;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  margin-bottom: 20px;
 }
 
-.spec-row span {
-  font-size: 20px;         /* ⬆ labels */
-  color: #b5b5b5;
-}
-
-.spec-row b {
-  font-size: 22px;         /* ⬆ values */
-  font-weight: 600;
-  color: #ffffff;
-}
-
-/* =========================
-   CTA BUTTON
-========================= */
-.primary-btn {
-  margin-top: 20px;
-  padding: 18px;
-  border-radius: 40px;
-  background: linear-gradient(90deg, #00f260, #0575e6);
-  border: none;
-  color: white;
-  font-size: 18px;
-  cursor: pointer;
+@keyframes rotation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* =========================
-   MORE MODELS
+   MOBILE RESPONSIVENESS
 ========================= */
-.more-models {
-  padding: 180px 60px 100px;
+@media (max-width: 1024px) {
+  .showcase-main {
+    grid-template-columns: 1fr;
+  }
+  
+  .showcase-hero img {
+    height: 60vh;
+  }
+  
+  .hero-overlay {
+    bottom: 40px;
+    left: 40px;
+  }
 }
 
-.more-models .section-title {
-  text-align: center;
-  margin-bottom: 60px;
-}
-
-.car-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 42px;
+@media (max-width: 768px) {
+  .showcase-top {
+    padding: 20px;
+  }
+  
+  .showcase-top h2 {
+    font-size: 24px;
+  }
+  
+  .hero-overlay h1 {
+    font-size: 48px;
+  }
+  
+  .showcase-info {
+    margin: 20px;
+    padding: 30px 20px;
+  }
+  
+  .car-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .more-models {
+    padding: 100px 20px;
+  }
 }

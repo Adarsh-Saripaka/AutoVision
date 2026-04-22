@@ -6,7 +6,9 @@ const Hero = () => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
     const ctx = canvas.getContext("2d");
+    let animId;
 
     const setCanvasSize = () => {
       canvas.width = window.innerWidth;
@@ -16,6 +18,9 @@ const Hero = () => {
 
     class Particle {
       constructor() {
+        this.reset();
+      }
+      reset() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
         this.size = Math.random() * 4 + 2;
@@ -50,8 +55,7 @@ const Hero = () => {
           const distance = Math.sqrt(dx * dx + dy * dy);
           if (distance < 150) {
             ctx.strokeStyle = `rgba(0,255,255,${0.5 * (1 - distance / 150)})`;
-            ctx.lineWidth = 0.7
-            ;
+            ctx.lineWidth = 0.8;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -68,13 +72,31 @@ const Hero = () => {
         p.draw();
       });
       connectParticles();
-      requestAnimationFrame(animate);
+      animId = requestAnimationFrame(animate);
     };
     animate();
 
-    window.addEventListener("resize", setCanvasSize);
-    return () => window.removeEventListener("resize", setCanvasSize);
+    const handleResize = () => {
+      setCanvasSize();
+      // Re-distribute particles that may be off-screen after resize
+      particles.forEach((p) => {
+        if (p.x > canvas.width || p.y > canvas.height) {
+          p.reset();
+        }
+      });
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
+
+  const handleExploreClick = (e) => {
+    e.preventDefault();
+    document.getElementById("brands")?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <div className="hero-container">
@@ -83,7 +105,7 @@ const Hero = () => {
         <br />
         <p className="tagline">When Engineering meets Elegance</p>
         <br />
-        <a href="#cars" className="cta-btn">Explore Now</a>
+        <a href="#brands" className="cta-btn" onClick={handleExploreClick}>Explore Now</a>
       </div>
   );
 };

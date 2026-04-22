@@ -8,83 +8,99 @@ export default function Showcase() {
   const { state } = useLocation();
   const navigate = useNavigate();
 
-  const brand = state?.brand || null;
+  const title = state?.brand || state?.hero?.brand || "Cars";
   const hero = state?.hero || null;
 
   const [cars, setCars] = useState([]);
   const [images, setImages] = useState({});
-  const [heroImage, setHeroImage] = useState("/default-car.jpg");
+  const [heroImage, setHeroImage] = useState("https://placehold.co/600x400/1C1C1C/00ffff?text=AutoVision+Showroom");
+  const [loading, setLoading] = useState(false);
 
-  /* FETCH BRAND CARS */
+  // Redirect if no data
   useEffect(() => {
-    if (brand) {
-      searchCars(brand).then(setCars);
+    if (!title && !hero) {
+      navigate("/", { replace: true });
     }
-  }, [brand]);
+  }, [title, hero, navigate]);
 
-  /* FETCH HERO IMAGE */
+  useEffect(() => {
+    if (title) {
+      setLoading(true);
+      searchCars(title)
+        .then(setCars)
+        .finally(() => setLoading(false));
+    }
+  }, [title]);
+
   useEffect(() => {
     if (hero) {
       getCarImage(`${hero.brand} ${hero.model}`).then(setHeroImage);
     }
   }, [hero]);
 
-  /* FETCH GRID IMAGES */
+  // Load all card images in parallel
   useEffect(() => {
     async function loadImages() {
-      const imgs = {};
-      for (const car of cars) {
-        imgs[`${car.brand}-${car.model}`] =
-          await getCarImage(`${car.brand} ${car.model}`);
-      }
-      setImages(imgs);
+      const entries = await Promise.all(
+        cars.map(async (car) => {
+          const key = `${car.brand}-${car.model}`;
+          const url = await getCarImage(`${car.brand} ${car.model}`);
+          return [key, url];
+        })
+      );
+      setImages(Object.fromEntries(entries));
     }
-    if (cars.length > 0) loadImages();
+    if (cars.length) loadImages();
   }, [cars]);
 
   const handleViewDetails = (car) => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     navigate("/showcase", {
-      state: {
-        hero: car,
-        brand: car.brand
-      }
+      state: { hero: car, brand: title }
     });
   };
 
-  if (!brand && !hero) {
-    navigate("/");
-    return null;
-  }
+  const handleView3D = () => {
+    if (!hero) return;
+    navigate("/models", { state: { filterBrand: hero.brand } });
+  };
+
+  if (!title && !hero) return null;
 
   return (
     <div className="showcase loaded">
-      {/* TOP BAR */}
       <div className="showcase-top">
-        <h2>AutoVision</h2>
-        <button className="back-btn" onClick={() => navigate("/")}>
-          ← Back
-        </button>
+        <h2 onClick={() => navigate("/")} style={{ cursor: 'pointer' }}>AutoVision</h2>
+        <button className="back-btn" onClick={() => navigate("/")}>← Home</button>
       </div>
 
-      {/* 🔥 DETAIL VIEW */}
       {hero && (
         <div className="showcase-main showcase-split">
-          {/* IMAGE */}
           <div className="showcase-hero">
             <img src={heroImage} alt={hero.model} />
             <div className="hero-shadow" />
             <div className="hero-overlay">
               <h1>{hero.brand} {hero.model}</h1>
-              <p>{hero.year} · {hero.body_style}</p>
+              <div className="hero-badges">
+                <span>{hero.year}</span>
+                <span>{hero.body_style}</span>
+                <span>{hero.country_origin}</span>
+              </div>
+
+              <button className="view-3d-btn" onClick={handleView3D}>
+                Interactive 3D Showroom
+              </button>
             </div>
           </div>
 
-          {/* 🔥 DETAILS PANEL */}
           <div className="showcase-info">
-            <h3 className="price">${hero.msrp_usd}</h3>
-
+            <div className="price-tag">
+              <span className="label">MSRP</span>
+              <h3 className="price">${Number(hero.msrp_usd).toLocaleString()}</h3>
+            </div>
+            
             <p className="subtitle">
-              {hero.engine_type} · {hero.transmission} · {hero.drivetrain}
+              {hero.engine_type} Engine · {hero.transmission} · {hero.drivetrain}
             </p>
 
             <div className="spec-table">
@@ -92,23 +108,18 @@ export default function Showcase() {
               <Spec label="Torque" value={`${hero.torque_nm} Nm`} />
               <Spec label="0–100 km/h" value={`${hero.zero_to_hundred_kmh}s`} />
               <Spec label="Top Speed" value={`${hero.top_speed_kmh} km/h`} />
-              <Spec label="Fuel Type" value={hero.fuel_type} />
               <Spec label="Cylinders" value={hero.cylinders} />
-              <Spec label="Seats" value={hero.seats} />
-              <Spec label="Doors" value={hero.doors} />
               <Spec label="Weight" value={`${hero.weight_kg} kg`} />
             </div>
 
-            <button className="primary-btn">Configure Yours</button>
+            <button className="primary-btn" onClick={() => alert("Booking System Coming Soon!")}>Reserve for Test Drive</button>
           </div>
         </div>
       )}
 
-      {/* 🔥 BRAND GRID VIEW */}
-      {brand && !hero && (
+      {cars.length > 0 && (
         <section className="more-models">
-          <h2 className="section-title">{brand} Models</h2>
-
+          <h2 className="section-title">Explore {title} Fleet</h2>
           <div className="car-grid">
             {cars.map((car, i) => (
               <CarCardtemp
@@ -123,6 +134,13 @@ export default function Showcase() {
             ))}
           </div>
         </section>
+      )}
+
+      {loading && (
+        <div className="showcase-loading">
+          <div className="loader"></div>
+          <p>Analyzing Fleet Data...</p>
+        </div>
       )}
     </div>
   );

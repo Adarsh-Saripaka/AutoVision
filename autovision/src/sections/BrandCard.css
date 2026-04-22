@@ -38,7 +38,7 @@
   font-weight: 800;
   letter-spacing: 2px;
   background: linear-gradient(120deg, #00ffff, #ff0080);
-  background-clip: border-box;
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   z-index: 2;
