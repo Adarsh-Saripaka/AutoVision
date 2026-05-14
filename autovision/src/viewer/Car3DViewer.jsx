@@ -121,12 +121,26 @@ export default function Car3DViewer({
   envType = "city",
   autoRotate = false
 }) {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   if (!modelUrl) return null;
 
   return (
     <ErrorBoundary>
       <div style={{ width: "100%", height: "100vh", background: "#050505" }}>
-        <Canvas shadows camera={{ position: [4, 2, 4], fov: 35 }}>
+        <Canvas 
+          shadows 
+          camera={{ 
+            position: isMobile ? [5, 3, 5] : [4, 2, 4], 
+            fov: isMobile ? 50 : 35 
+          }}
+        >
           <Suspense fallback={<LoadingFallback />}>
             <Stage 
               environment={envType === "city" ? "city" : "night"} 
