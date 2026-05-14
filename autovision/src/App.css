@@ -1,146 +1,150 @@
 html, body {
-  background-color: #0a0a0a;
+  background-color: #050505;
   margin: 0;
   padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #fff;
 }
 
 #root {
-  background-color: #0a0a0a;
+  background-color: #050505;
 }
 
+/* ================= TASKBAR ================= */
 .taskbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #1C1C1C;
-  min-height: 105px;
+  background-color: #0f0f0f;
+  min-height: 90px;
   width: 100%;
-  padding: 0 60px;
+  padding: 0 50px;
   box-sizing: border-box;
   gap: 20px;
   position: sticky;
   top: 0;
   z-index: 1000;
-  border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+  border-bottom: 2px solid rgba(0, 255, 255, 0.15);
 }
 
 .logo_title {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 12px;
 }
 
 .logo {
-  height: 60px;
-  width: 60px;
-  border-radius: 100%;
+  height: 50px;
+  width: 50px;
+  border: 1px solid #00ffff;
+  padding: 2px;
+  border-radius: 0; /* Engineering look */
 }
 
 .title {
-  font-size: clamp(24px, 4vw, 40px);
-  font-style: italic;
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  text-transform: uppercase;
   color: #FFFFFF;
   margin: 0;
 }
 
-.nav_right {
-  display: flex;
-  align-items: center;
-}
-
 .navlinks {
   display: flex;
-  gap: 30px;
+  gap: 40px;
 }
 
 .navlinks a {
   text-decoration: none;
-  color: #FFFFFF;
-  font-size: 16px;
-  font-weight: 500;
-  transition: 0.3s ease;
-  white-space: nowrap;
-  transition: color 0.3s ease, transform 0.3s ease;
+  color: #888;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: all 0.3s ease;
 }
 
-.navlinks a:hover{
+.navlinks a:hover {
   color: #00ffff;
-  transform: translateX(5px);
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
 }
 
 /* ================= SECTION TITLES ================= */
 .section-title {
   color: #FFFFFF;
-  font-size: clamp(36px, 6vw, 72px);
+  font-size: clamp(32px, 5vw, 64px);
   font-weight: 900;
-  text-align: center;
-  margin: 0;
-  padding: 80px 20px 40px;
+  text-align: left;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 100px 50px 40px;
   text-transform: uppercase;
   letter-spacing: -2px;
+  border-left: 5px solid #00ffff;
+  margin-bottom: 30px;
 }
 
 .brands-section {
-  padding: 0 60px 100px;
+  padding: 0 50px 100px;
+  max-width: 1300px;
+  margin: 0 auto;
 }
 
 .brand-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 30px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
 }
 
 .brand-card {
   background: #111;
   border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 20px;
-  padding: 40px 20px;
-  text-align: center;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 40px 25px;
+  text-align: left;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  border-radius: 0; /* Sharp engineering look */
 }
 
 .brand-card:hover {
-  background: #151515;
+  background: #00ffff;
   border-color: #00ffff;
-  transform: translateY(-10px);
-  box-shadow: 0 20px 40px rgba(0, 255, 255, 0.1);
+  transform: translateY(-5px);
+}
+
+.brand-card:hover p, .brand-card:hover span {
+  color: #000 !important;
 }
 
 .brand-card p {
   color: #fff;
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-top: 15px;
+  font-size: 1.1rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 20px;
 }
 
 /* ================= RESPONSIVENESS ================= */
 @media (max-width: 900px) {
   .taskbar {
-    flex-direction: column;
-    height: auto;
     padding: 20px;
-    gap: 15px;
+    min-height: auto;
   }
-  
-  .navlinks {
-    gap: 15px;
+  .section-title {
+    padding: 50px 20px;
+    font-size: 32px;
   }
-  
   .brands-section {
     padding: 20px;
   }
 }
 
-@media (max-width: 600px) {
-  .nav_right {
-    display: none; /* Hide nav on mobile for cleaner look */
-  }
-}
-
 /* ================= FOOTER ================= */
 .footer {
-  background-color: #1C1C1C;
-  padding: 60px 20px;
-  margin-top: 100px;
+  background-color: #0f0f0f;
+  padding: 80px 20px;
+  margin-top: 150px;
+  border-top: 1px solid rgba(255,255,255,0.05);
   text-align: center;
 }

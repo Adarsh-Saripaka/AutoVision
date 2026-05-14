@@ -20,7 +20,6 @@ export const smartMatchMaterial = (meshName, matName) => {
                   !name.includes("tire") && 
                   !name.includes("rubber");
 
-  // Glass/Transparent detection
   const isGlass = name.includes("glass") || 
                   name.includes("window") || 
                   name.includes("windshield") ||
