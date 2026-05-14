@@ -21,122 +21,127 @@ export default function ViewerPage() {
 
   if (!state?.modelUrl) return null;
 
+  const uiColors = {
+    bg: "#050505",
+    surface: "#0f0f0f",
+    accent: "#00ffff",
+    border: "rgba(0, 255, 255, 0.2)",
+    text: "#ffffff",
+    textDim: "#666"
+  };
+
   const controlStyles = {
-    section: { marginBottom: "32px", borderBottom: "1px solid rgba(255,255,255,0.08)", paddingBottom: "24px" },
-    label: { fontSize: "0.65rem", textTransform: "uppercase", fontWeight: 800, letterSpacing: "2px", color: "#888", marginBottom: "16px", display: "block" },
-    grid: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px" },
+    section: { marginBottom: "32px", borderBottom: `1px solid ${uiColors.border}`, paddingBottom: "24px" },
+    label: { fontSize: "0.6rem", textTransform: "uppercase", fontWeight: 900, letterSpacing: "3px", color: uiColors.textDim, marginBottom: "16px", display: "block" },
+    grid: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "10px" },
     toggleBtn: (active) => ({
       flex: 1,
       padding: "12px",
-      background: active ? "#00ffff" : "rgba(255,255,255,0.05)",
-      color: active ? "#000" : "#fff",
-      border: active ? "1px solid #00ffff" : "1px solid rgba(255,255,255,0.1)",
-      borderRadius: "8px",
-      fontSize: "0.75rem",
+      background: active ? uiColors.accent : "transparent",
+      color: active ? "#000" : uiColors.text,
+      border: `1px solid ${uiColors.border}`,
+      borderRadius: "0px",
+      fontSize: "0.7rem",
       fontWeight: 900,
       cursor: "pointer",
-      transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-      textTransform: 'uppercase'
+      transition: "all 0.2s ease",
+      textTransform: 'uppercase',
+      letterSpacing: '1px'
     })
   };
 
   return (
-    <div style={{ position: "relative", width: "100%", height: "100vh", background: "#050505", overflow: "hidden", color: '#fff' }}>
-      {/* Back Button */}
+    <div style={{ position: "relative", width: "100%", height: "100vh", background: uiColors.bg, overflow: "hidden", color: uiColors.text, fontFamily: "'Inter', sans-serif" }}>
+      {/* Precision Navigation */}
       <button
-        aria-label="Back to previous page"
+        aria-label="Back to home"
         onClick={() => navigate(-1)}
         style={{
-          position: "absolute", top: 30, left: 30, zIndex: 100,
-          padding: "12px 28px", borderRadius: "50px",
-          background: "rgba(10, 10, 10, 0.7)", backdropFilter: "blur(20px)",
-          color: "#fff", border: "1px solid rgba(255,255,255,0.15)",
-          cursor: "pointer", fontWeight: 700, fontSize: '0.8rem', letterSpacing: '1px'
+          position: "absolute", top: 40, left: 40, zIndex: 100,
+          padding: "10px 25px",
+          background: uiColors.bg,
+          color: uiColors.text, border: `1px solid ${uiColors.accent}`,
+          cursor: "pointer", fontWeight: 900, fontSize: '0.7rem', letterSpacing: '2px',
+          textTransform: 'uppercase',
+          boxShadow: `0 0 20px rgba(0,255,255,0.1)`
         }}
       >
-        ← EXIT SHOWROOM
+        [ EXIT_SHOWROOM ]
       </button>
 
-      {/* Configurator Sidebar */}
+      {/* Engineering Sidebar */}
       <aside style={{
-        position: "absolute", top: 30, right: 30, zIndex: 100, width: "320px",
-        maxHeight: "calc(100vh - 60px)", overflowY: "auto",
-        background: "rgba(15, 15, 15, 0.8)", backdropFilter: "blur(40px)",
-        border: "1px solid rgba(255, 255, 255, 0.1)", borderRadius: "28px",
-        padding: "40px 30px", boxShadow: '0 20px 50px rgba(0,0,0,0.5)',
+        position: "absolute", top: 40, right: 40, zIndex: 100, width: "340px",
+        maxHeight: "calc(100vh - 80px)", overflowY: "auto",
+        background: uiColors.surface,
+        border: `1px solid ${uiColors.border}`,
+        padding: "40px 35px", 
+        boxShadow: '20px 20px 60px rgba(0,0,0,0.8)',
         scrollbarWidth: 'none'
       }}>
-        <div style={{ marginBottom: '40px' }}>
-          <h2 style={{ fontSize: "1.6rem", margin: "0", color: "#00ffff", fontWeight: 900, letterSpacing: '-1px' }}>CONFIGURATOR</h2>
-          <p style={{ fontSize: '0.75rem', color: '#666', marginTop: '5px' }}>Customizing Model {state.id || 'Active'}</p>
+        <div style={{ marginBottom: '45px', borderLeft: `4px solid ${uiColors.accent}`, paddingLeft: '20px' }}>
+          <h2 style={{ fontSize: "1.8rem", margin: "0", color: uiColors.text, fontWeight: 900, letterSpacing: '-1px', textTransform: 'uppercase' }}>Config<span style={{ color: uiColors.accent }}>v1</span></h2>
+          <p style={{ fontSize: '0.65rem', color: uiColors.textDim, marginTop: '5px', letterSpacing: '1px' }}>SYSTEM_CORE: ACTIVE // ASSET_ID: {state.id || '00'}</p>
         </div>
         
-        {/* Exterior Section */}
         <div style={controlStyles.section}>
-          <label style={controlStyles.label}>Exterior Finish</label>
+          <label style={controlStyles.label}>Surface_Finish</label>
           <div style={controlStyles.grid}>
             {BODY_COLORS.map(color => (
               <button
                 key={color}
-                aria-label={`Select color ${color}`}
+                aria-label={`Color ${color}`}
                 onClick={() => setAccentColor(color)}
                 style={{
-                  width: "44px", height: "44px", borderRadius: "50%", background: color,
-                  border: accentColor === color ? "3px solid #00ffff" : "2px solid rgba(255,255,255,0.1)",
-                  boxShadow: accentColor === color ? '0 0 15px rgba(0,255,255,0.3)' : 'none',
-                  cursor: "pointer", transition: 'transform 0.2s'
+                  width: "42px", height: "42px", background: color,
+                  border: accentColor === color ? `2px solid ${uiColors.accent}` : "1px solid rgba(255,255,255,0.1)",
+                  cursor: "pointer", transition: '0.2s',
+                  boxShadow: accentColor === color ? `0 0 15px ${uiColors.accent}` : 'none'
                 }}
-                onMouseEnter={(e) => e.target.style.transform = 'scale(1.1)'}
-                onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
               />
             ))}
           </div>
         </div>
 
-        {/* Wheels Section */}
         <div style={controlStyles.section}>
-          <label style={controlStyles.label}>Wheel Alloy</label>
+          <label style={controlStyles.label}>Alloy_Type</label>
           <div style={controlStyles.grid}>
             {WHEEL_COLORS.map(color => (
               <button
                 key={color}
-                aria-label={`Select wheel color ${color}`}
+                aria-label={`Wheel ${color}`}
                 onClick={() => setWheelColor(color)}
                 style={{
-                  width: "44px", height: "44px", borderRadius: "10px", background: color,
-                  border: wheelColor === color ? "3px solid #00ffff" : "2px solid rgba(255,255,255,0.1)",
-                  cursor: "pointer", transition: 'transform 0.2s'
+                  width: "42px", height: "42px", background: color,
+                  border: wheelColor === color ? `2px solid ${uiColors.accent}` : "1px solid rgba(255,255,255,0.1)",
+                  cursor: "pointer", transition: '0.2s'
                 }}
-                onMouseEnter={(e) => e.target.style.transform = 'scale(1.1)'}
-                onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
               />
             ))}
           </div>
         </div>
 
-        {/* Environment Section */}
         <div style={controlStyles.section}>
-          <label style={controlStyles.label}>Lighting Mode</label>
-          <div style={{ display: "flex", gap: "10px" }}>
-            <button onClick={() => setEnvType("city")} style={controlStyles.toggleBtn(envType === "city")}>DAYLIGHT</button>
+          <label style={controlStyles.label}>Environment_Render</label>
+          <div style={{ display: "flex" }}>
+            <button onClick={() => setEnvType("city")} style={{ ...controlStyles.toggleBtn(envType === "city"), borderRight: 'none' }}>DAYLIGHT</button>
             <button onClick={() => setEnvType("night")} style={controlStyles.toggleBtn(envType === "night")}>MIDNIGHT</button>
           </div>
         </div>
 
-        {/* Camera/Visual Section */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
           <button 
             onClick={() => setIsExploded(!isExploded)}
             style={controlStyles.toggleBtn(isExploded)}
           >
-            {isExploded ? "MERGE CHASSIS" : "EXPLODED VIEW"}
+            {isExploded ? "MERGE_ASSETS" : "EXPLODE_CHASSIS"}
           </button>
           
           <button 
             onClick={() => setAutoRotate(!autoRotate)}
             style={controlStyles.toggleBtn(autoRotate)}
           >
-            {autoRotate ? "STATIONARY" : "CINEMATIC SPIN"}
+            {autoRotate ? "MANUAL_ORBIT" : "CINEMATIC_ORBIT"}
           </button>
         </div>
       </aside>
