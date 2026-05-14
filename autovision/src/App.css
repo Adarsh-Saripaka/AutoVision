@@ -8,7 +8,6 @@ html, body {
   background-color: #0a0a0a;
 }
 
-/* ================= TASKBAR ================= */
 .taskbar {
   display: flex;
   justify-content: space-between;
@@ -61,6 +60,12 @@ html, body {
   font-weight: 500;
   transition: 0.3s ease;
   white-space: nowrap;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navlinks a:hover{
+  color: #00ffff;
+  transform: translateX(5px);
 }
 
 /* ================= SECTION TITLES ================= */
