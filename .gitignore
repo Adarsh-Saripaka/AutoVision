@@ -1,5 +1,6 @@
 # Dependency directories
 node_modules/
+autovision-backend/data/autovision-3d-assets/cars/
 jspm_packages/
 
 # Build outputs
