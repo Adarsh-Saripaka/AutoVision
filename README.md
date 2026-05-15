@@ -106,7 +106,7 @@ axis-driveworks/
 ├── axisdriveworks/              # Frontend React Application
 │   ├── public/                  # Static assets
 │   │   ├── Logo.png             # Application logo
-│   │   └── car_specifications_1900_2025_150k_models.csv
+│   │   └── cardata.csv          # Vehicle database (fallback)
 │   ├── src/
 │   │   ├── Api/                 # API service logic
 │   │   │   └── FetchApi.js      # Backend communication logic
@@ -132,7 +132,7 @@ axis-driveworks/
 ├── axisdriveworks-backend/      # Node.js Express Backend
 │   ├── data/
 │   │   ├── axisdriveworks-3d-assets/ # 3D model registry
-│   │   └── cars.csv             # Vehicle search database
+│   │   └── cardata.csv          # Vehicle search database
 │   ├── server.js                # Main API server
 │   └── package.json             # Backend dependencies
 │

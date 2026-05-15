@@ -55,7 +55,7 @@ let cars = [];
 let dataReady = false;
 
 csv()
-  .fromFile("./data/cars.csv")
+  .fromFile("./data/cardata.csv")
   .then((data) => {
     // Assign a stable numeric id to every car
     cars = data.map((car, index) => ({ id: index, ...car }));
