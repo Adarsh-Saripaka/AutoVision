@@ -1,0 +1,294 @@
+/* =========================
+   ROOT
+========================= */
+.showcase {
+  min-height: 100vh;
+  background: #050505;
+  color: #ffffff;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+}
+
+.showcase.loaded {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =========================
+   TOP BAR
+========================= */
+.showcase-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 26px 60px;
+}
+
+.showcase-top h2 {
+  font-size: 40px;
+  font-style: italic;
+  color: #FFFFFF;
+  animation: neonGlow 2s infinite alternate;
+}
+
+@keyframes neonGlow {
+    0% {
+        text-shadow: 0 0 5px #00f260, 0 0 10px #00f260, 0 0 20px #00f260;
+    }
+    50% {
+        text-shadow: 0 0 10px #00f260, 0 0 20px #00f260, 0 0 40px #00f260;
+    }
+    100% {
+        text-shadow: 0 0 5px #00f260, 0 0 10px #00f260, 0 0 20px #00f260;
+    }
+}
+
+.showcase-hero img {
+  border: none;
+  border-radius: 30px;
+}
+
+.back-btn {
+  background: transparent;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  padding: 10px 18px;
+  border-radius: 30px;
+  cursor: pointer;
+  width: 180px;
+  height: 50px;
+  font-size: 15px;
+  transition: background 0.3s ease;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* =========================
+   MAIN GRID (CRITICAL FIX)
+========================= */
+.showcase-main {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  align-items: flex-start; /* 🔥 prevents height stretching */
+}
+
+.showcase-split {
+  gap: 40px;
+  padding: 0 40px;
+}
+
+/* =========================
+   HERO IMAGE
+========================= */
+.showcase-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.showcase-hero img {
+  width: 100%;
+  height: 100vh;            /* 🔥 uniform visual height */
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.04);   /* subtle premium zoom */
+}
+
+.hero-shadow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.85)
+  );
+}
+
+/* =========================
+   HERO TEXT & BADGES
+========================= */
+.hero-overlay {
+  position: absolute;
+  bottom: 70px;
+  left: 70px;
+  z-index: 2;
+}
+
+.hero-overlay h1 {
+  font-size: clamp(40px, 8vw, 90px);
+  font-weight: 900;
+  line-height: 1.05;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.hero-badges {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.hero-badges span {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  padding: 8px 20px;
+  border-radius: 50px; /* Pill shape */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.hero-badges span:hover {
+  background: rgba(0, 255, 255, 0.15);
+  border-color: #00ffff;
+  color: #00ffff;
+  transform: translateY(-2px);
+}
+
+
+/* =========================
+   CAR GRID
+========================= */
+.more-models {
+  padding: 100px 60px;
+}
+
+.section-title {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 40px;
+  color: #fff;
+}
+
+.car-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+/* =========================
+   INFO PANEL & PRICE
+========================= */
+.showcase-info {
+  align-self: flex-start;
+  padding: 50px 40px;
+  margin: 40px;
+  background: rgba(15, 17, 20, 0.6);
+  backdrop-filter: blur(40px) saturate(150%);
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 50px 100px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255,255,255,0.02);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  transition: all 0.4s ease;
+}
+
+.showcase-info:hover {
+  border-color: rgba(0, 255, 255, 0.2);
+  transform: translateY(-5px);
+}
+
+
+.price-tag {
+  display: flex;
+  flex-direction: column;
+}
+
+.price-tag .label {
+  font-size: 12px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+}
+
+.showcase-info .price {
+  font-size: 48px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+}
+
+/* =========================
+   LOADER
+========================= */
+.showcase-loading {
+  position: fixed;
+  inset: 0;
+  background: #050505;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #FFF;
+  border-bottom-color: #00ffff;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes rotation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* =========================
+   MOBILE RESPONSIVENESS
+========================= */
+@media (max-width: 1024px) {
+  .showcase-main {
+    grid-template-columns: 1fr;
+  }
+  
+  .showcase-hero img {
+    height: 60vh;
+  }
+  
+  .hero-overlay {
+    bottom: 40px;
+    left: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .showcase-top {
+    padding: 20px;
+  }
+  
+  .showcase-top h2 {
+    font-size: 24px;
+  }
+  
+  .hero-overlay h1 {
+    font-size: 48px;
+  }
+  
+  .showcase-info {
+    margin: 20px;
+    padding: 30px 20px;
+  }
+  
+  .car-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .more-models {
+    padding: 100px 20px;
+  }
+}
