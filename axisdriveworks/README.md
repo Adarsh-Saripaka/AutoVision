@@ -1,74 +1,71 @@
-# Axis DriveWorks 🏎️
+# 🏎️ Axis DriveWorks: Frontend
 
-**The Ultimate Interactive 3D Automotive Encyclopedia**
+**High-Performance 3D Automotive Configurator**
 
-Axis DriveWorks is a production-grade, full-stack web application designed for car enthusiasts and engineers. It combines a massive dataset of 150,000+ vehicles with high-fidelity 3D visualization and real-time customization.
-
----
-
-## 🌟 Key Features
-
-- **Interactive 3D Showroom:** High-performance GLTF rendering using **React Three Fiber** and **Draco Compression**.
-- **Massive Data Engine:** Fast, keyword-optimized search across 150k+ vehicle records using an **Express.js** backend.
-- **Dynamic Configuration:** Real-time part manipulation, color changes, and "Exploded Chassis" views.
-- **Cinematic Visuals:** Intelligent image retrieval strategy fetching high-quality automotive photography via **Unsplash API**.
-- **Modern Architecture:** Responsive CSS Grid layouts, Glassmorphic UI components, and smooth page transitions.
+This is the frontend repository for **Axis DriveWorks**, a production-grade 3D car configurator built with React, Three.js, and Vite.
 
 ---
 
-## 🛠️ Tech Stack
+## 🚀 Core Technologies
 
-### Frontend
-- **Core:** React 19 + Vite (Speed optimized)
-- **3D Engine:** Three.js / React Three Fiber / @react-three/drei
-- **Styling:** Vanilla CSS (Custom design system with 0 dependencies)
-- **Routing:** React Router 7
-
-### Backend
-- **Server:** Node.js + Express
-- **Data Processing:** In-memory CSV indexing for ultra-fast search results.
-- **Security:** Integrated CORS, Rate Limiting, and Security Headers (Helmet-style).
+- **React 19:** Utilizing the latest concurrent rendering features for smooth UI transitions.
+- **Three.js & React Three Fiber:** Powering the immersive 3D experience with optimized GLTF loading and material shaders.
+- **Vite:** Next-generation frontend tooling for lightning-fast development and optimized production builds.
+- **Vanilla CSS:** A custom design system leveraging modern CSS features (Variables, Grid, Flexbox) for a zero-dependency, high-performance UI.
 
 ---
 
-## 🚀 Getting Started
+## 🎨 Interactive Features
 
-### Prerequisites
-- Node.js (v18+)
-- Unsplash Access Key (for dynamic imagery)
-
-### Installation
-1. Clone the repository
-2. Install dependencies:
-   ```bash
-   npm install
-   npm install --prefix ../axisdriveworks-backend
-   ```
-3. Create a `.env` file in the root with:
-   ```env
-   VITE_UNSPLASH_ACCESS_KEY=your_key_here
-   ```
-4. Start the full-stack app:
-   ```bash
-   npm run dev
-   ```
+- **Real-time Customization:** Instant feedback on color changes, material swaps (Matte vs Gloss), and wheel configurations.
+- **Exploded View Engine:** An interactive animation system that breaks down car components to show chassis and internal engineering.
+- **Dynamic Camera Systems:** Cinematic orbital controls with smooth damping and intelligent auto-focus.
+- **Glassmorphic UI:** A premium, semi-transparent user interface designed for maximum visual impact and readability.
 
 ---
 
-## 📐 System Architecture
+## 🛠️ Development Setup
 
-1. **The Crawler Engine:** The backend parses a 150k-row dataset on startup, creating a searchable index.
-2. **The 3D Hub:** Models are dynamically loaded from a remote registry, matched with local material manifests for perfect texture application.
-3. **The Visual Pipeline:** Front-end components use multi-stage fallback logic to ensure "no-broken-image" states, even for rare vintage models.
+### 1. Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn
+
+### 2. Installation
+```bash
+npm install
+```
+
+### 3. Environment Variables
+Create a `.env` file in this directory:
+```env
+VITE_API_URL=http://localhost:3000 # Backend API URL
+VITE_UNSPLASH_ACCESS_KEY=your_key  # For high-res background imagery
+```
+
+### 4. Start Development Server
+```bash
+npm run dev
+```
 
 ---
 
-## 📈 Recruiter Note
-This project demonstrates expertise in:
-- **Performance Optimization:** Handling heavy 3D assets and large datasets without UI lag.
-- **System Design:** Building a decoupled Frontend/Backend architecture.
-- **UX Engineering:** Implementing complex state-driven animations and responsive layouts.
+## 📐 Frontend Architecture
+
+The frontend is structured into modular layers:
+- **`/components`:** Atomic UI elements and complex dashboard widgets.
+- **`/components/canvas`:** Three.js specific components (Lights, Models, Environment).
+- **`/hooks`:** Custom React hooks for state management and 3D interactions.
+- **`/styles`:** Modular CSS files following a consistent design token system.
 
 ---
 
-© 2025 Axis DriveWorks. Built with precision.
+## 📉 Optimization Techniques
+
+- **Draco Mesh Compression:** Reducing 3D model sizes by up to 70% for faster load times.
+- **Texture Compression:** Efficient handling of 4K textures using compressed formats.
+- **Conditional Rendering:** Only loading heavy 3D assets when they are in view.
+- **Debounced Inputs:** Ensuring UI interactions don't bottleneck the 3D rendering loop.
+
+---
+
+© 2025 Axis DriveWorks. Part of the AutoVision Ecosystem.
