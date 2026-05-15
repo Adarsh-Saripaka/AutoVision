@@ -71,7 +71,7 @@ export default function ModelsLibrary() {
       <div className="library-header">
         <button className="back-btn" onClick={() => navigate("/")}>← Home</button>
         <h1>3D Models Library</h1>
-        <p>Explore high-fidelity 3D assets available in AutoVision</p>
+        <p>Explore high-fidelity 3D assets available in Axis DriveWorks</p>
       </div>
 
       <div className="library-content">

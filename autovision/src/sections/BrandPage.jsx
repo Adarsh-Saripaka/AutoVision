@@ -42,7 +42,7 @@ export default function BrandPage() {
       <div className="brand-header">
         <h1 className="brand-title">{brand}</h1>
         <p className="brand-subtitle">
-          Explore all {brand} models available in AutoVision
+          Explore all {brand} models available in Axis DriveWorks
         </p>
       </div>
 

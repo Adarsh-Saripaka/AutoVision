@@ -111,10 +111,12 @@
 /* ================= MOBILE RESPONSIVENESS ================= */
 @media (max-width: 768px) {
   .exit-btn {
-    top: 20px;
-    left: 20px;
-    padding: 8px 15px;
+    top: 15px;
+    left: 15px;
+    padding: 10px 15px;
     font-size: 0.6rem;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(5px);
   }
 
   .config-sidebar {
@@ -122,12 +124,12 @@
     bottom: 0;
     right: 0;
     width: 100%;
-    max-height: 45vh;
+    max-height: 50vh;
     border-radius: 30px 30px 0 0;
     border-top: 2px solid #00ffff;
     border-left: none;
     border-right: none;
-    padding: 30px 25px;
+    padding: 30px 25px 50px; /* Added extra bottom padding for mobile home bars */
     box-shadow: 0 -20px 40px rgba(0,0,0,0.8);
   }
 

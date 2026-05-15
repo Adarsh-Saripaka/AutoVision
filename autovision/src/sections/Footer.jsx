@@ -24,13 +24,13 @@ const Footer = () => {
 
         <div className='footer-section'>
           <h3>Customer Service</h3>
-          <a href="mailto:autovision.showroom@gmail.com">Email Support</a>
+          <a href="mailto:support@axisdriveworks.com">Email Support</a>
           <a href="tel:+15551234567">Call Us</a>
         </div>
 
         <div className='footer-section'>
           <h3>Contact Info</h3>
-          <p>Email: autovision.showroom@gmail.com</p>
+          <p>Email: support@axisdriveworks.com</p>
           <p>Phone: +1 (555) 123-4567</p>
           <p>Address: 123 Auto Lane, City, State 12345</p>
 
@@ -45,7 +45,7 @@ const Footer = () => {
       </div>
 
       <div className='footer-bottom'>
-        <p>&copy; {new Date().getFullYear()} AutoVision. All Rights Reserved.</p>
+        <p>&copy; {new Date().getFullYear()} Axis DriveWorks. All Rights Reserved.</p>
         <p>
           <a href='/privacy'>Privacy Policy</a> |
           <a href='/terms'> Terms of Service</a>

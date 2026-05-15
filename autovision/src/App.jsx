@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import "./App.css";
 
 import Hero from "./sections/Hero";
@@ -11,15 +11,24 @@ import BrandPage from "./sections/BrandPage";
 import ModelsLibrary from "./viewer/ModelsLibrary";
 import ViewerPage from "./viewer/ViewerPage";
 
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+};
+
 const Home = ({ onSearch }) => {
   const navigate = useNavigate();
 
-  const bodyStyles = [
-    { name: "Sedan", icon: "🚗" },
-    { name: "SUV", icon: "🚙" },
-    { name: "Coupe", icon: "🏎️" },
-    { name: "Hatchback", icon: "🚗" },
-    { name: "Convertible", icon: "🚖" }
+  const popularBrands = [
+    { name: "BMW", logo: "https://www.carlogos.org/car-logos/bmw-logo-2020.png" },
+    { name: "Audi", logo: "https://www.carlogos.org/car-logos/audi-logo.png" },
+    { name: "Porsche", logo: "https://www.carlogos.org/car-logos/porsche-logo.png" },
+    { name: "Ferrari", logo: "https://www.carlogos.org/car-logos/ferrari-logo.png" },
+    { name: "Lamborghini", logo: "https://www.carlogos.org/car-logos/lamborghini-logo.png" },
+    { name: "Mercedes", logo: "https://www.carlogos.org/car-logos/mercedes-benz-logo.png" }
   ];
 
   return (
@@ -27,8 +36,8 @@ const Home = ({ onSearch }) => {
       {/* TASKBAR */}
       <header className="taskbar">
         <div className="logo_title">
-          <img src="/Logo.png" alt="AutoVision Logo" className="logo" />
-          <h1 className="title">AutoVision</h1>
+          <img src="/Logo.png" alt="Axis DriveWorks Logo" className="logo" />
+          <h1 className="title">Axis DriveWorks</h1>
         </div>
 
         <Search onSearch={onSearch} />
@@ -64,20 +73,22 @@ const Home = ({ onSearch }) => {
         <Hero />
       </div>
 
-      {/* BODY STYLES */}
-      <p className="section-title">Explore by Category</p>
+      {/* BRANDS */}
+      <p className="section-title">Explore Popular Brands</p>
 
-      <section id="categories" className="brands-section">
+      <section id="brands" className="brands-section">
         <div className="brand-grid">
-          {bodyStyles.map((style) => (
+          {popularBrands.map((brand) => (
             <div 
-              key={style.name} 
+              key={brand.name} 
               className="brand-card" 
-              onClick={() => navigate(`/showcase`, { state: { brand: style.name } })}
+              onClick={() => navigate(`/brand/${brand.name}`)}
               style={{ cursor: 'pointer' }}
             >
-              <span style={{ fontSize: '2rem' }}>{style.icon}</span>
-              <p>{style.name}</p>
+              <div className="logo-wrapper">
+                <img src={brand.logo} alt={brand.name} className="brand-logo" />
+              </div>
+              <p>{brand.name}</p>
             </div>
           ))}
         </div>
@@ -104,14 +115,17 @@ export default function App() {
   };
 
   return (
-    <Routes>
-      <Route path="/" element={<Home onSearch={handleSearch} />} />
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Home onSearch={handleSearch} />} />
       <Route path="/showcase" element={<Showcase />} />
       <Route path="/brand/:brand" element={<BrandPage />} />
       <Route path="/models" element={<ModelsLibrary />} />
       <Route path="/viewer" element={<ViewerPage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
+    </>
   );
 }
 

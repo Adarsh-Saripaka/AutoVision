@@ -101,7 +101,7 @@ const Hero = () => {
   return (
     <div className="hero-container">
       <canvas ref={canvasRef} className="particles-canvas" />
-        <h1 className="logo-text">AUTOVISION</h1>
+        <h1 className="logo-text">Axis DriveWorks</h1>
         <br />
         <p className="tagline">When Engineering meets Elegance</p>
         <br />

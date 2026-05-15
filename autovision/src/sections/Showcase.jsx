@@ -9,28 +9,40 @@ export default function Showcase() {
   const navigate = useNavigate();
 
   const title = state?.brand || state?.hero?.brand || "Cars";
-  const hero = state?.hero || null;
-
   const [cars, setCars] = useState([]);
+  const [hero, setHero] = useState(state?.hero || null);
   const [images, setImages] = useState({});
-  const [heroImage, setHeroImage] = useState("https://placehold.co/600x400/1C1C1C/00ffff?text=AutoVision+Showroom");
+  const [heroImage, setHeroImage] = useState("https://placehold.co/600x400/1C1C1C/00ffff?text=Axis+DriveWorks+Showroom");
   const [loading, setLoading] = useState(false);
 
   // Redirect if no data
   useEffect(() => {
-    if (!title && !hero) {
+    if (!title && !state?.hero) {
       navigate("/", { replace: true });
     }
-  }, [title, hero, navigate]);
+  }, [title, state?.hero, navigate]);
 
   useEffect(() => {
     if (title) {
       setLoading(true);
       searchCars(title)
-        .then(setCars)
+        .then((data) => {
+          setCars(data);
+          // If no hero was passed in navigation state, use the first result
+          if (!state?.hero && data.length > 0) {
+            setHero(data[0]);
+          }
+        })
         .finally(() => setLoading(false));
     }
-  }, [title]);
+  }, [title, state?.hero]);
+
+  // Sync state if it changes (e.g. nested navigation)
+  useEffect(() => {
+    if (state?.hero) {
+      setHero(state.hero);
+    }
+  }, [state?.hero]);
 
   useEffect(() => {
     if (hero) {
@@ -70,8 +82,8 @@ export default function Showcase() {
   return (
     <div className="showcase loaded">
       <div className="showcase-top">
-        <h2 onClick={() => navigate("/")} style={{ cursor: 'pointer' }}>AutoVision</h2>
-        <button className="back-btn" onClick={() => navigate("/")}>← Home</button>
+        <button className="back-btn" onClick={() => navigate(-1)}>← BACK</button>
+        <h2>Axis DriveWorks</h2>
       </div>
 
       {hero && (

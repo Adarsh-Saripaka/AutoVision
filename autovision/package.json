@@ -1,7 +1,8 @@
 {
-  "name": "autovision",
+  "name": "axis-driveworks",
   "private": true,
-  "version": "0.0.0",
+  "description": "Premium 3D car configurator and automotive encyclopedia built with React, Three.js, and Express.",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "concurrently \"vite\" \"npm start --prefix ../autovision-backend\"",
