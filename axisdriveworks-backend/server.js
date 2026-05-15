@@ -83,9 +83,10 @@ async function loadCarData() {
     const values = line.split(",").map(v => v.trim());
     
     if (isHeader) {
-      headers = values;
+      // Strip BOM and clean headers
+      headers = values.map(h => h.replace(/^\uFEFF/, "").trim());
       isHeader = false;
-      console.log("📍 Headers detected:", headers);
+      console.log("📍 Headers detected (cleaned):", headers);
       continue;
     }
 
@@ -94,12 +95,17 @@ async function loadCarData() {
     headers.forEach((h, i) => {
       const cleanHeader = h.toLowerCase().trim();
       if (["brand", "model", "year", "body_style", "msrp_usd", "horsepower"].includes(cleanHeader)) {
-        car[cleanHeader] = values[i];
+        car[cleanHeader] = values[i] ? values[i].replace(/^"|"$/g, "").trim() : "";
       }
     });
     
     car.id = count++;
     cars.push(car);
+
+    // Print a sample of the first car to verify loading
+    if (count === 1) {
+      console.log("🔍 Sample Data Loaded:", JSON.stringify(car));
+    }
   }
 
   dataReady = true;
