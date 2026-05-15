@@ -1,11 +1,19 @@
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, useGLTF, Html, Stage, useProgress, ContactShadows, Center } from "@react-three/drei";
+import {
+  OrbitControls,
+  useGLTF,
+  Html,
+  useProgress,
+  ContactShadows,
+  Center,
+  Environment,
+} from "@react-three/drei";
 import React, { Suspense, useEffect, useState, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { MODEL_MANIFEST, smartMatchMaterial } from "./modelConfig";
 
-// Use a high-performance CDN for the Draco decoder
-const DRACO_URL = "https://www.gstatic.com/draco/versioned/decoders/1.5.5/";
+// ✅ Correct way to configure Draco in @react-three/drei v10+
+useGLTF.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.5/");
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -30,18 +38,18 @@ class ErrorBoundary extends React.Component {
 }
 
 function Model({ url, color, wheelColor, isExploded }) {
-  // Enable Draco decoding for compressed GLB files
-  const { scene } = useGLTF(url, DRACO_URL);
+  // ✅ No Draco URL here — set globally above with setDecoderPath
+  const { scene } = useGLTF(url);
   const initialPositions = useRef(new Map());
-  
-  // Find manifest entry based on URL or Filename
+
+  // Find manifest entry based on URL
   const modelKey = useMemo(() => {
     return Object.keys(MODEL_MANIFEST).find(key => url.includes(key)) || null;
   }, [url]);
 
   const model = useMemo(() => {
     const clone = scene.clone();
-    
+
     // Scale Normalization Logic
     const box = new THREE.Box3().setFromObject(clone);
     const size = box.getSize(new THREE.Vector3());
@@ -55,7 +63,7 @@ function Model({ url, color, wheelColor, isExploded }) {
         initialPositions.current.set(child.uuid, child.position.clone());
       }
     });
-    
+
     return clone;
   }, [scene, modelKey]);
 
@@ -64,7 +72,6 @@ function Model({ url, color, wheelColor, isExploded }) {
 
     model.traverse((child) => {
       if (child.isMesh) {
-        const matName = child.material.name.toLowerCase();
         const meshName = child.name.toLowerCase();
         const originalPos = initialPositions.current.get(child.uuid);
 
@@ -77,7 +84,7 @@ function Model({ url, color, wheelColor, isExploded }) {
         let isGlass = config?.exclusionParts?.includes(child.name);
 
         if (isPaint === undefined) {
-          const matched = smartMatchMaterial(child.name, child.material.name);
+          const matched = smartMatchMaterial(child.name, child.material?.name ?? "");
           isPaint = matched.isPaint;
           isWheel = matched.isWheel;
           isGlass = matched.isGlass;
@@ -85,12 +92,12 @@ function Model({ url, color, wheelColor, isExploded }) {
 
         // Apply Colors
         if (isPaint && !isGlass) {
-          child.material = child.material.clone(); // Ensure unique material instance
+          child.material = child.material.clone();
           child.material.color.set(color);
           child.material.roughness = 0.2;
           child.material.metalness = 0.8;
         }
-        
+
         if (isWheel && !isGlass) {
           child.material = child.material.clone();
           child.material.color.set(wheelColor);
@@ -113,9 +120,9 @@ function Model({ url, color, wheelColor, isExploded }) {
   return <primitive object={model} />;
 }
 
-export default function Vehicle3DViewer({ 
-  modelUrl, 
-  accentColor = "#ffffff", 
+export default function Vehicle3DViewer({
+  modelUrl,
+  accentColor = "#ffffff",
   wheelColor = "#ffffff",
   isExploded = false,
   envType = "city",
@@ -134,31 +141,45 @@ export default function Vehicle3DViewer({
   return (
     <ErrorBoundary>
       <div style={{ width: "100%", height: "100vh", background: "#050505" }}>
-        <Canvas 
-          shadows 
-          camera={{ 
-            position: isMobile ? [5, 3, 5] : [4, 2, 4], 
-            fov: isMobile ? 50 : 35 
+        <Canvas
+          shadows
+          camera={{
+            position: isMobile ? [5, 3, 5] : [4, 2, 4],
+            fov: isMobile ? 50 : 35
           }}
         >
           <Suspense fallback={<LoadingFallback />}>
-            <Stage 
-              environment={envType === "city" ? "city" : "night"} 
-              intensity={envType === "city" ? 0.6 : 0.15}
-              contactShadow={false}
-              adjustCamera={false}
-              shadows="contact"
-            >
-              <Center top>
-                <Model 
-                  url={modelUrl} 
-                  color={accentColor} 
-                  wheelColor={wheelColor}
-                  isExploded={isExploded} 
-                />
-              </Center>
-            </Stage>
-            <ContactShadows position={[0, -0.01, 0]} opacity={0.6} scale={15} blur={2.5} far={1} />
+            {/* ✅ Explicit lighting — more stable than Stage across drei versions */}
+            <Environment
+              preset={envType === "city" ? "city" : "night"}
+              background={false}
+            />
+            <ambientLight intensity={envType === "city" ? 0.6 : 0.2} />
+            <directionalLight
+              position={[5, 8, 5]}
+              intensity={envType === "city" ? 1.5 : 0.5}
+              castShadow
+              shadow-mapSize={[2048, 2048]}
+            />
+            <directionalLight position={[-5, 3, -5]} intensity={0.3} />
+
+            {/* ✅ Center without deprecated 'top' prop */}
+            <Center>
+              <Model
+                url={modelUrl}
+                color={accentColor}
+                wheelColor={wheelColor}
+                isExploded={isExploded}
+              />
+            </Center>
+
+            <ContactShadows
+              position={[0, -0.01, 0]}
+              opacity={0.6}
+              scale={15}
+              blur={2.5}
+              far={1}
+            />
           </Suspense>
 
           <OrbitControls
@@ -195,10 +216,10 @@ function LoadingFallback() {
         minWidth: '250px'
       }}>
         <div style={{ width: '100%', height: '2px', background: 'rgba(255,255,255,0.1)', position: 'relative' }}>
-          <div style={{ 
-            width: `${progress}%`, 
-            height: '100%', 
-            background: '#00ffff', 
+          <div style={{
+            width: `${progress}%`,
+            height: '100%',
+            background: '#00ffff',
             transition: 'width 0.3s ease',
             boxShadow: '0 0 10px #00ffff'
           }} />
@@ -209,7 +230,3 @@ function LoadingFallback() {
     </Html>
   );
 }
-
-
-
-

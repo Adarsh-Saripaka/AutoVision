@@ -1,9 +1,15 @@
 import express from "express";
-import csv from "csvtojson";
 import cors from "cors";
+import fs from "fs";
+import readline from "readline";
+import path from "path";
+import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 
 dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -16,9 +22,25 @@ app.use(
       "http://localhost:5174",
       "http://localhost:3000",
       process.env.FRONTEND_URL, // Dynamic URL for Render deployment
+      "https://axis-driveworks-ui.onrender.com"
     ].filter(Boolean),
   })
 );
+
+app.use(express.json());
+
+// --- Static Assets (3D Models) ---
+// This allows the frontend to download the .glb files
+const assetsPath = path.join(__dirname, "data", "axisdriveworks-3d-assets");
+app.use("/assets", express.static(assetsPath));
+
+console.log("🛠️  Assets being served from:", assetsPath);
+
+// Log incoming requests for debugging
+app.use((req, res, next) => {
+  console.log(`Incoming Request: ${req.method} ${req.url}`);
+  next();
+});
 
 // Simple in-memory rate limiter (per IP, 60 req/min)
 const rateMap = new Map();
@@ -50,18 +72,22 @@ app.use((_req, res, next) => {
   next();
 });
 
-const fs = require("fs");
-const readline = require("readline");
-
 // --- Data ---
 let cars = [];
 let dataReady = false;
 
 // ULTRA-OPTIMIZED: Manual line-by-line parsing to save RAM
 async function loadCarData() {
-  const filePath = "./data/cardata.csv";
+  const filePath = path.join(__dirname, "data", "cardata.csv");
+  
+  console.log("-----------------------------------------");
+  console.log("🚀 BACKEND STARTING...");
+  console.log("📂 Looking for database at:", filePath);
+
   if (!fs.existsSync(filePath)) {
-    console.error("❌ Critical: CSV file not found at", filePath);
+    console.error("❌ ERROR: cardata.csv NOT FOUND!");
+    console.log("Please ensure the file is in: axisdriveworks-backend/data/cardata.csv");
+    console.log("-----------------------------------------");
     return;
   }
 
@@ -75,22 +101,19 @@ async function loadCarData() {
   let headers = [];
   let count = 0;
 
-  console.log("⏳ Starting ultra-efficient stream load...");
+  console.log("⏳ Reading 151,500 rows... (please wait)");
 
   for await (const line of rl) {
-    if (!line.trim()) continue; // Skip empty lines
+    if (!line.trim()) continue;
 
     const values = line.split(",").map(v => v.trim());
     
     if (isHeader) {
-      // Strip BOM and clean headers
       headers = values.map(h => h.replace(/^\uFEFF/, "").trim());
       isHeader = false;
-      console.log("📍 Headers detected (cleaned):", headers);
       continue;
     }
 
-    // Map only essential fields to keep memory footprint tiny
     const car = {};
     headers.forEach((h, i) => {
       const cleanHeader = h.toLowerCase().trim();
@@ -101,15 +124,12 @@ async function loadCarData() {
     
     car.id = count++;
     cars.push(car);
-
-    // Print a sample of the first car to verify loading
-    if (count === 1) {
-      console.log("🔍 Sample Data Loaded:", JSON.stringify(car));
-    }
   }
 
   dataReady = true;
-  console.log(`✅ Success: ${cars.length} cars indexed. Ready for search.`);
+  console.log(`✅ DATABASE LOADED: ${cars.length} cars available.`);
+  console.log(`📡 Server active at: http://localhost:5000`);
+  console.log("-----------------------------------------");
 }
 
 loadCarData();
