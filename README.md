@@ -10,14 +10,6 @@ Axis DriveWorks is a full-stack 3D car configurator and vehicle search platform.
 
 ---
 
-## Links and Visuals
-
-[Live Demo Placeholder](https://your-deployment-link.render.com) | [GitHub Repository](https://github.com/Adarsh-Saripaka/AutoVision)
-
-![Application Screenshot Placeholder](https://via.placeholder.com/1200x600?text=Axis+DriveWorks+Screenshot)
-
----
-
 ## System Architecture
 
 The following diagram illustrates the data flow and communication between the frontend, backend, and external APIs.
@@ -45,7 +37,7 @@ The 3D viewer utilizes a modular pipeline to ensure performance and interactive 
 graph LR
     Model[3D Model] --> Loader[GLTFLoader]
     Loader --> Scene[Three.js Scene]
-    Scene --> Controls[Orbit Controls]
+    Scene --> Viewer[Interactive Viewer]
     Scene --> Lighting[Environment Lighting]
     UI[Color Picker] -->|Texture Update| Scene
     Scene --> Canvas[React Three Fiber Canvas]
@@ -57,8 +49,8 @@ graph LR
 
 - Vehicle search powered by a dedicated backend API.
 - Integration of a comprehensive vehicle dataset stored in CSV format.
-- Interactive 3D car viewer with support for rotation and zoom.
-- Real-time paint color customization for 3D models.
+- Interactive 3D car viewer for real-time model interaction.
+- Dynamic paint color customization for 3D models.
 - Dynamic vehicle imagery retrieval via the Unsplash API.
 - Fully responsive frontend interface built for multiple devices.
 - Decoupled frontend and backend architecture for better maintainability.
@@ -165,8 +157,7 @@ FRONTEND_URL=http://localhost:5173
 1. Launch the application in your browser (defaults to localhost:5173).
 2. Use the search bar to find specific car models or brands.
 3. Click on a vehicle from the search results to view its 3D model.
-4. Use the mouse to rotate and zoom into the 3D car.
-5. Use the provided color palette to change the vehicle's paint finish.
+4. Use the provided color palette to change the vehicle's paint finish.
 
 ---
 
