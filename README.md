@@ -104,33 +104,39 @@ graph LR
 ```bash
 axis-driveworks/
 ├── axisdriveworks/              # Frontend React Application
-│   ├── public/                  # Static assets (Logos, CSV fallback)
+│   ├── public/                  # Static assets
+│   │   ├── Logo.png             # Application logo
+│   │   └── car_specifications_1900_2025_150k_models.csv
 │   ├── src/
-│   │   ├── Api/                 # API service and fetch logic
-│   │   ├── images/              # Local UI icons and images
-│   │   ├── sections/            # Modular UI sections and components
-│   │   │   ├── BrandCard.jsx    # Component for vehicle brand cards
-│   │   │   ├── BrandPage.jsx    # Layout for brand-specific models
-│   │   │   ├── Footer.jsx       # Global application footer
-│   │   │   ├── Hero.jsx         # Hero landing section
-│   │   │   ├── Search.jsx       # Search interface and logic
-│   │   │   ├── Showcase.jsx     # Main 3D model showcase section
-│   │   │   └── VehicleCard.jsx  # Individual vehicle summary card
-│   │   ├── viewer/              # Three.js 3D viewer and scene logic
-│   │   ├── App.jsx              # Main application entry component
-│   │   ├── main.jsx             # React DOM rendering entry point
-│   │   └── index.css            # Global CSS design system
-│   ├── package.json             # Frontend dependencies and scripts
-│   └── vite.config.js           # Vite build configuration
+│   │   ├── Api/                 # API service logic
+│   │   │   └── FetchApi.js      # Backend communication logic
+│   │   ├── images/              # UI assets
+│   │   │   ├── car1.png
+│   │   │   ├── car2.png
+│   │   │   └── car3.png
+│   │   ├── sections/            # Modular UI components
+│   │   │   ├── BrandCard.css / BrandCard.jsx
+│   │   │   ├── BrandPage.css / BrandPage.jsx
+│   │   │   ├── Footer.css / Footer.jsx
+│   │   │   ├── Hero.css / Hero.jsx
+│   │   │   ├── Search.css / Search.jsx
+│   │   │   ├── Showcase.css / Showcase.jsx
+│   │   │   └── VehicleCard.css / VehicleCard.jsx
+│   │   ├── viewer/              # 3D viewer components
+│   │   ├── App.css / App.jsx    # Root component
+│   │   ├── index.css            # Global styling
+│   │   └── main.jsx             # Application entry point
+│   ├── package.json             # Frontend dependencies
+│   └── vite.config.js           # Vite configuration
 │
 ├── axisdriveworks-backend/      # Node.js Express Backend
 │   ├── data/
-│   │   ├── axisdriveworks-3d-assets/ # Local registry for 3D models
-│   │   └── cars.csv             # Primary vehicle search database
-│   ├── server.js                # Express server and search algorithm
-│   └── package.json             # Backend dependencies and scripts
+│   │   ├── axisdriveworks-3d-assets/ # 3D model registry
+│   │   └── cars.csv             # Vehicle search database
+│   ├── server.js                # Main API server
+│   └── package.json             # Backend dependencies
 │
-└── README.md                    # Main Project Documentation
+└── README.md                    # Project Documentation
 ```
 
 ---
