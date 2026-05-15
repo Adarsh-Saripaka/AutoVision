@@ -103,19 +103,27 @@ graph LR
 
 ```bash
 axis-driveworks/
-├── axisdriveworks/
+├── axisdriveworks/              # Frontend React Application
+│   ├── public/                  # Static assets (Logos, CSV fallback)
 │   ├── src/
-│   ├── public/
-│   ├── package.json
-│   └── vite.config.js
+│   │   ├── Api/                 # API service and fetch logic
+│   │   ├── images/              # Local UI icons and images
+│   │   ├── sections/            # Modular UI sections and components
+│   │   ├── viewer/              # Three.js 3D viewer and scene logic
+│   │   ├── App.jsx              # Main application entry component
+│   │   ├── main.jsx             # React DOM rendering entry point
+│   │   └── index.css            # Global CSS design system
+│   ├── package.json             # Frontend dependencies and scripts
+│   └── vite.config.js           # Vite build configuration
 │
-├── axisdriveworks-backend/
-│   ├── server.js
+├── axisdriveworks-backend/      # Node.js Express Backend
 │   ├── data/
-│   ├── package.json
-│   └── .env
+│   │   ├── axisdriveworks-3d-assets/ # Local registry for 3D models
+│   │   └── cars.csv             # Primary vehicle search database
+│   ├── server.js                # Express server and search algorithm
+│   └── package.json             # Backend dependencies and scripts
 │
-└── README.md
+└── README.md                    # Main Project Documentation
 ```
 
 ---
