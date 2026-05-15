@@ -54,18 +54,32 @@ app.use((_req, res, next) => {
 let cars = [];
 let dataReady = false;
 
-csv()
-  .fromFile("./data/cardata.csv")
-  .then((data) => {
-    // Assign a stable numeric id to every car
-    cars = data.map((car, index) => ({ id: index, ...car }));
+// Optimization: Using a more memory-efficient way to parse the 30MB CSV
+async function loadCarData() {
+  try {
+    console.log("⏳ Starting CSV data load...");
+    const data = await csv().fromFile("./data/cardata.csv");
+    
+    // Process data in a way that minimizes memory overhead
+    cars = data.map((car, index) => ({
+      id: index,
+      brand: car.brand,
+      model: car.model,
+      year: car.year,
+      body_style: car.body_style,
+      msrp_usd: car.msrp_usd,
+      horsepower: car.horsepower
+    }));
+
     dataReady = true;
-    console.log("✅ Cars loaded:", cars.length);
-  })
-  .catch((err) => {
-    console.error("❌ CSV load error:", err.message);
-    process.exit(1); // fail fast — don't serve without data
-  });
+    console.log(`✅ Success: ${cars.length} cars indexed and ready.`);
+  } catch (err) {
+    console.error("❌ Critical: CSV load failed:", err.message);
+    // On Render, we want to see the error in logs rather than just crashing
+  }
+}
+
+loadCarData();
 
 // --- Routes ---
 
