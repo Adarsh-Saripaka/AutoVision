@@ -2,7 +2,7 @@ const UNSPLASH_BASE = "https://api.unsplash.com/search/photos";
 const UNSPLASH_KEY = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
 
 // Automatically switch between production and development API endpoints
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+const BASE_URL = (import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || "http://localhost:5000") + "/api";
 
 export async function getCarImage(carName) {
   const fetchImage = async (query) => {
