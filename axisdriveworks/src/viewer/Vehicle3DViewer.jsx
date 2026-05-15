@@ -12,8 +12,8 @@ import React, { Suspense, useEffect, useState, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { MODEL_MANIFEST, smartMatchMaterial } from "./modelConfig";
 
-// ✅ Correct way to configure Draco in @react-three/drei v10+
-useGLTF.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.5/");
+// Draco CDN — passed as 2nd arg to useGLTF (supported in drei v9 and v10)
+const DRACO_URL = "https://www.gstatic.com/draco/versioned/decoders/1.5.5/";
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -38,8 +38,7 @@ class ErrorBoundary extends React.Component {
 }
 
 function Model({ url, color, wheelColor, isExploded }) {
-  // ✅ No Draco URL here — set globally above with setDecoderPath
-  const { scene } = useGLTF(url);
+  const { scene } = useGLTF(url, DRACO_URL);
   const initialPositions = useRef(new Map());
 
   // Find manifest entry based on URL
