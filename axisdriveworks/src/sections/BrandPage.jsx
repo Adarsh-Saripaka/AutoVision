@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { searchCars, getCarImage } from "../Api/FetchApi";
-import CarCardtemp from "./CarCardtemp";
+import VehicleCard from "./VehicleCard";
 import "./BrandPage.css";
 
 export default function BrandPage() {
@@ -52,7 +52,7 @@ export default function BrandPage() {
       <div className="brand-grid-wrapper">
         <div className="car-grid">
           {cars.map((car, i) => (
-            <CarCardtemp
+            <VehicleCard
               key={i}
               name={car.model}
               brand={car.brand}
