@@ -78,18 +78,23 @@ async function loadCarData() {
   console.log("⏳ Starting ultra-efficient stream load...");
 
   for await (const line of rl) {
-    const values = line.split(",");
+    if (!line.trim()) continue; // Skip empty lines
+
+    const values = line.split(",").map(v => v.trim());
+    
     if (isHeader) {
       headers = values;
       isHeader = false;
+      console.log("📍 Headers detected:", headers);
       continue;
     }
 
     // Map only essential fields to keep memory footprint tiny
     const car = {};
     headers.forEach((h, i) => {
-      if (["brand", "model", "year", "body_style", "msrp_usd", "horsepower"].includes(h)) {
-        car[h] = values[i];
+      const cleanHeader = h.toLowerCase().trim();
+      if (["brand", "model", "year", "body_style", "msrp_usd", "horsepower"].includes(cleanHeader)) {
+        car[cleanHeader] = values[i];
       }
     });
     
@@ -98,7 +103,7 @@ async function loadCarData() {
   }
 
   dataReady = true;
-  console.log(`✅ Success: ${cars.length} cars indexed using Stream/Readline.`);
+  console.log(`✅ Success: ${cars.length} cars indexed. Ready for search.`);
 }
 
 loadCarData();
