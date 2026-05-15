@@ -109,6 +109,13 @@ axis-driveworks/
 │   │   ├── Api/                 # API service and fetch logic
 │   │   ├── images/              # Local UI icons and images
 │   │   ├── sections/            # Modular UI sections and components
+│   │   │   ├── BrandCard.jsx    # Component for vehicle brand cards
+│   │   │   ├── BrandPage.jsx    # Layout for brand-specific models
+│   │   │   ├── Footer.jsx       # Global application footer
+│   │   │   ├── Hero.jsx         # Hero landing section
+│   │   │   ├── Search.jsx       # Search interface and logic
+│   │   │   ├── Showcase.jsx     # Main 3D model showcase section
+│   │   │   └── VehicleCard.jsx  # Individual vehicle summary card
 │   │   ├── viewer/              # Three.js 3D viewer and scene logic
 │   │   ├── App.jsx              # Main application entry component
 │   │   ├── main.jsx             # React DOM rendering entry point
