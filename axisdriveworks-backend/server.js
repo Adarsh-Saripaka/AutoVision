@@ -50,33 +50,55 @@ app.use((_req, res, next) => {
   next();
 });
 
+const fs = require("fs");
+const readline = require("readline");
+
 // --- Data ---
 let cars = [];
 let dataReady = false;
 
-// Optimization: Using a more memory-efficient way to parse the 30MB CSV
+// ULTRA-OPTIMIZED: Manual line-by-line parsing to save RAM
 async function loadCarData() {
-  try {
-    console.log("⏳ Starting CSV data load...");
-    const data = await csv().fromFile("./data/cardata.csv");
-    
-    // Process data in a way that minimizes memory overhead
-    cars = data.map((car, index) => ({
-      id: index,
-      brand: car.brand,
-      model: car.model,
-      year: car.year,
-      body_style: car.body_style,
-      msrp_usd: car.msrp_usd,
-      horsepower: car.horsepower
-    }));
-
-    dataReady = true;
-    console.log(`✅ Success: ${cars.length} cars indexed and ready.`);
-  } catch (err) {
-    console.error("❌ Critical: CSV load failed:", err.message);
-    // On Render, we want to see the error in logs rather than just crashing
+  const filePath = "./data/cardata.csv";
+  if (!fs.existsSync(filePath)) {
+    console.error("❌ Critical: CSV file not found at", filePath);
+    return;
   }
+
+  const fileStream = fs.createReadStream(filePath);
+  const rl = readline.createInterface({
+    input: fileStream,
+    crlfDelay: Infinity
+  });
+
+  let isHeader = true;
+  let headers = [];
+  let count = 0;
+
+  console.log("⏳ Starting ultra-efficient stream load...");
+
+  for await (const line of rl) {
+    const values = line.split(",");
+    if (isHeader) {
+      headers = values;
+      isHeader = false;
+      continue;
+    }
+
+    // Map only essential fields to keep memory footprint tiny
+    const car = {};
+    headers.forEach((h, i) => {
+      if (["brand", "model", "year", "body_style", "msrp_usd", "horsepower"].includes(h)) {
+        car[h] = values[i];
+      }
+    });
+    
+    car.id = count++;
+    cars.push(car);
+  }
+
+  dataReady = true;
+  console.log(`✅ Success: ${cars.length} cars indexed using Stream/Readline.`);
 }
 
 loadCarData();
